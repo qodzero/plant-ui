@@ -1,0 +1,140 @@
+#:import IconButton widgets.buttons.IconButton
+#:import RoundedButton widgets.buttons.RoundedButton
+#:import Text widgets.labels.Text
+
+<PlantView>:
+    canvas.before:
+        Color:
+            rgba: app.colors.white
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    RelativeLayout:
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                size_hint_y: .7
+                canvas.before:
+                    Color:
+                        rgba: [1,1,1,1]
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        source: root.source
+            BoxLayout:
+                size_hint_y: .3
+        BoxLayout:
+            orientation: 'vertical'
+            AnchorLayout:
+                size_hint_y: .6
+                padding: dp(12)
+                anchor_x: 'left'
+                anchor_y: 'top'
+                BoxLayout:
+                    padding: dp(8)
+                    size_hint: [None, None]
+                    size: [dp(32), dp(32)]
+                    canvas.before:
+                        Color:
+                            rgba: app.colors.white
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(8)]
+                    IconButton:
+                        source: 'assets/icons/ic_back.png'
+                        on_release: app.root.ids.scrn_mngr.current = 'scrn_home'
+            BoxLayout:
+                size_hint_y: .4
+                padding: dp(12)
+                spacing: dp(8)
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgba: [.6, .6, .6, .1]
+                    RoundedRectangle:
+                        pos: [self.pos[0], self.pos[1]+dp(2)]
+                        size: self.size
+                        radius: [self.height/8, self.height/8, 0, 0]
+                    Color:
+                        rgba: app.colors.white
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [self.height/8, self.height/8, 0, 0]
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(32)
+                    Text:
+                        text: root.name
+                        font_name: app.fonts.heading
+                        font_size: app.fonts.size.h2
+                        color: app.colors.secondary
+                    AnchorLayout:
+                        size_hint_x: None
+                        width: self.height
+                        padding: dp(2)
+                        anchor_x: 'right'
+                        IconButton:
+                            source: 'assets/icons/fav-filled.png'
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(18)
+                    Text:
+                        text: 'Juicy and delicious'
+                        font_name: app.fonts.subheading
+                        font_size: app.fonts.size.h6
+                        color: app.colors.grey
+                    Widget:
+                        size_hint_x: None
+                        width: self.height
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(18)
+                    BoxLayout:
+                        size_hint_x: .5
+                        id: stars
+                        IconButton:
+                            source: 'assets/icons/star-filled.png'
+                            size_hint_x: None
+                            width: self.height
+                        IconButton:
+                            source: 'assets/icons/star-filled.png'
+                            size_hint_x: None
+                            width: self.height
+                        IconButton:
+                            source: 'assets/icons/star-filled.png'
+                            size_hint_x: None
+                            width: self.height
+                        IconButton:
+                            source: 'assets/icons/star-filled.png'
+                            size_hint_x: None
+                            width: self.height
+                        IconButton:
+                            source: 'assets/icons/star-filled.png'
+                            size_hint_x: None
+                            width: self.height
+                    Widget:
+                        size_hint_x: None
+                        width: self.height
+                AnchorLayout:
+                    anchor_y: 'top'
+                    Label:
+                        text: 'Mit Ausnahme von Bedienungsrechten von Hypotheken ist der volle Betrag in Abzug zu bringen, nach Bereinigung um entsprech.'
+                        size: self.texture_size
+                        size_hint_y: None
+                        valign: 'top'
+                        text_size: [self.width, None]
+                        font_name: app.fonts.body
+                        font_size: app.fonts.size.h5
+                        color: app.colors.secondary
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(42)
+                    RoundedButton:
+                        text: 'Add to cart | %s'%str(root.price)
+                        font_name: app.fonts.heading
+                        color: app.colors.white
+                        bcolor: root.bcolor
+                        radius: [dp(12)]
+        

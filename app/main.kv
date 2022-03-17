@@ -1,0 +1,20 @@
+#:import PlantView views.plant.PlantView
+#:import Home views.home.Home
+<MainWindow>:
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: rgba('#ffffff')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    ScreenManager:
+        id: scrn_mngr
+        Screen:
+            name: 'scrn_home'
+            Home:
+                id: home
+        Screen:
+            name: 'scrn_plant'
+            PlantView:
+                id: plant_view

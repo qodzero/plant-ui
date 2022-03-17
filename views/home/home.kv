@@ -1,0 +1,288 @@
+#:import IconButton widgets.buttons.IconButton
+#:import RoundedButton widgets.buttons.RoundedButton
+#:import Text widgets.labels.Text
+#: import Window kivy.core.window.Window
+#:import NavigationDrawer kivy.garden.navigationdrawer.NavigationDrawer
+
+<Home>:
+    NavigationDrawer:
+        id: nav
+        anim_type: 'slide_above_simple'
+        separator_image_width: 0
+        BoxLayout:
+            id: sidebar
+            canvas.before:
+                Color:
+                    rgba: [.6, .6, .6, .1]
+                Rectangle:
+                    pos: [self.pos[0]+dp(3), self.pos[1]]
+                    size: self.size
+                Color:
+                    rgba: [1,1,1,1]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'top'
+                FlatButton:
+                    text: 'Close'
+                    color: app.colors.primary
+                    font_name: app.fonts.heading
+                    font_size: app.fonts.size.h6
+                    size_hint: [.25, None]
+                    height: dp(42)
+                    on_release: nav.toggle_state()
+        BoxLayout:
+            id: main_content
+            orientation: 'vertical'
+            spacing: dp(8)
+            padding: [dp(0), dp(12)]
+            canvas.before:
+                Color:
+                    rgba: app.colors.white
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                size_hint_y: None
+                height: dp(24)
+                padding: [dp(12), dp(0)]
+                AnchorLayout
+                    anchor_x: 'left'
+                    IconButton:
+                        source: 'assets/icons/ic_menu.png'
+                        size_hint_x: None
+                        width: self.height
+                        on_release: nav.toggle_state()
+                AnchorLayout
+                    anchor_x: 'right'
+                    BoxLayout:
+                        size_hint_x: None
+                        width: self.height
+                        padding: dp(4)
+                        canvas.before:
+                            Color:
+                                rgba: app.colors.primary
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [dp(6)]
+                        IconButton:
+                            source: 'assets/icons/ic_basket.png'
+            AnchorLayout:
+                padding: [dp(14), 0,0,0]
+                size_hint_y: None
+                height: dp(32)
+                anchor_x: 'left'
+                Text:
+                    text: "[color=#9E7EED]Fresh[/color] fruits and vegetables"
+                    font_name: app.fonts.heading
+                    font_size: app.fonts.size.h3
+                    color: app.colors.secondary
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(36)
+                    ScrollView:
+                        do_scroll: [True, False]
+                        size_hint: [None, None]
+                        size: self.parent.size
+                        bar_inactive_color: [0,0,0,0]
+                        bar_active_color: [0,0,0,0]
+                        GridLayout:
+                            size_hint_x: None
+                            size: self.minimum_size
+                            padding: [dp(14), dp(8), 0, dp(8)]
+                            spacing: dp(14)
+                            rows: 1
+                            FlatToggle:
+                                text: 'Popular'
+                                state: 'down'
+                            FlatToggle:
+                                text: 'Discounts'
+                            FlatToggle:
+                                text: 'Gold Apples'
+                            FlatToggle:
+                                text: 'Strawberries'
+                BoxLayout:
+                    id: hslider
+                    ScrollView:
+                        do_scroll: [True, False]
+                        size_hint: [None, None]
+                        size: self.parent.size
+                        bar_active_color: [0,0,0,0]
+                        bar_inactive_color: [0,0,0,0]
+                        GridLayout:
+                            id: products
+                            size_hint_x: None
+                            size: self.minimum_size
+                            padding: [dp(14), dp(8), 0, dp(8)]
+                            spacing: dp(14)
+                            rows: 1
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(32)
+                    padding: [dp(14), dp(8)]
+                    Text:
+                        text: 'Pre-order'
+                        font_name: app.fonts.heading
+                        color: app.colors.secondary
+                BoxLayout:
+                    id: vslider
+                    ScrollView:
+                        do_scroll: [False, True]
+                        size_hint_y: None
+                        height: self.parent.height
+                        GridLayout:
+                            id: specials
+                            cols: 1
+                            size_hint_y: None
+                            height: self.minimum_height
+                            padding: [dp(14), dp(8)]
+                            spacing: dp(14)
+                            Special:
+                                name: 'Pineapple'
+                                price: 25
+                                bcolor: app.colors.success
+                                source: 'assets/imgs/pineapple-square.png'
+                            Special:
+                                name: 'Blackberry'
+                                price: 14
+                                bcolor: app.colors.primary
+                                source: 'assets/imgs/berry-square.png'
+
+<FlatToggle@ToggleButton>:
+    color: app.colors.secondary if self.state == 'down' else app.colors.grey
+    font_name: app.fonts.heading
+    font_size: app.fonts.size.h6
+    group: 'cats'
+    background_normal: ""
+    background_down: ""
+    background_color: [0,0,0,0]
+    size_hint_x: None
+    width: Window.width*.2
+    canvas.before:
+        Color:
+            rgba: app.colors.primary if self.state == 'down' else [0,0,0,0]
+        Rectangle:
+            pos: [self.pos[0]+self.size[0]*.3, self.pos[1]]
+            size: [self.size[0]*.4, dp(2)]
+
+<Product>:
+    orientation: 'vertical'
+    size_hint_x: None
+    width: Window.width*.6
+    canvas.before:
+        Color:
+            rgba: app.colors.white
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [root.radius]
+    Widget:
+        canvas.before:
+            Color:
+                rgba: app.colors.white
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [root.radius, root.radius, 0,0]
+                source: root.source
+    BoxLayout:
+        size_hint_y: None
+        height: dp(54)
+        padding: dp(8)
+        canvas.before:
+            Color:
+                rgba: root.bcolor
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [0,0, root.radius, root.radius]
+        Text:
+            text: root.name
+            font_name: app.fonts.heading
+            font_size: app.fonts.size.h5
+            color: app.colors.white
+            halign: 'left'
+            size_hint_x: .7
+        Text:
+            text: "$"+str(root.price)
+            font_name: app.fonts.heading
+            font_size: app.fonts.size.h5
+            color: app.colors.white
+            halign: 'right'
+            size_hint_x: .3
+
+<Special>:
+    padding: dp(1)
+    size_hint_y: None
+    height: dp(64)
+    canvas.before:
+        Color:
+            rgba: app.colors.grey_light
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [root.radius]
+    BoxLayout:
+        padding: dp(4)
+        canvas.before:
+            Color:
+                rgba: app.colors.white
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [root.radius]
+        Widget:
+            size_hint_x: None
+            width: self.height
+            canvas.before:
+                Color:
+                    rgba: app.colors.white
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [root.radius]
+                    source: root.source
+        BoxLayout:
+            size_hint_y: None
+            height: dp(54)
+            padding: dp(8)
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: dp(4)
+                size_hint_x: .7
+                Text:
+                    text: root.name
+                    font_name: app.fonts.heading
+                    font_size: app.fonts.size.h5
+                    color: app.colors.secondary
+                    halign: 'left'
+                BoxLayout:
+                    id: tags
+                    spacing: dp(8)
+                    Text:
+                        text: 'Mixes'
+                        font_name: app.fonts.body
+                        font_size: app.fonts.size.h6
+                        color: app.colors.grey
+                        halign: 'left'
+                    Text:
+                        text: 'Extras'
+                        font_name: app.fonts.body
+                        font_size: app.fonts.size.h6
+                        color: app.colors.grey
+                        halign: 'left'
+            Text:
+                text: "$"+str(root.price)
+                font_name: app.fonts.heading
+                font_size: app.fonts.size.h5
+                color: app.colors.primary
+                halign: 'right'
+                size_hint_x: .3
+
